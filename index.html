@@ -158,7 +158,7 @@ main section.view{padding-block:56px 72px}
 .face .say::before{content:"Say: ";color:var(--signal)}
 .face .hint{margin-top:auto;font-size:.8rem;color:var(--ink-2)}
 .back-face .hint{color:rgba(255,255,255,.7)}
-.back-face p{font-size:.95rem}
+.back-face .why{font-size:.95rem}
 .note{margin-top:28px;padding:16px 18px;border-radius:12px;background:var(--signal-soft);color:var(--ink);font-size:.95rem}
 @media (prefers-reduced-motion:reduce){.card .inner{transition:none}.btn:hover{transform:none}}
 
@@ -205,6 +205,7 @@ footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;gap:12px 32px;justif
     <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0014 0M12 18v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 21h14M4 7h16M7 7l-3 7a3 3 0 006 0zM17 7l-3 7a3 3 0 006 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-offline" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v7M9 11l3 3 3-3M10 18h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </defs>
 </svg>
 
@@ -302,7 +303,7 @@ footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;gap:12px 32px;justif
         <li><b>The law is written for lawyers</b><span>The Charter promises protection from unreasonable search and a right to a lawyer, but it never tells you the words to use <a class="cite" href="#sources">[1]</a>.</span></li>
         <li><b>Encounters are sudden</b><span>You can't research your rights during a traffic stop or a meeting with the vice-principal. Information has to arrive in seconds.</span></li>
         <li><b>Young people feel the pressure most</b><span>The Supreme Court of Canada has recognized that young and racialized people may not feel free to walk away from police, even when they legally can <a class="cite" href="#sources">[3]</a>.</span></li>
-        <li><b>Help exists, but it comes later</b><span>Organizations like Legal Aid Ontario, Justice for Children and Youth and the John Howard Society of Ontario support people after a problem starts <a class="cite" href="#sources">[13]</a><a class="cite" href="#sources">[14]</a><a class="cite" href="#sources">[16]</a>. Few tools help during the moment itself.</span></li>
+        <li><b>Help exists, but it comes later</b><span>Organizations like Legal Aid Ontario, Justice for Children and Youth and the John Howard Society of Ontario support people after a problem starts <a class="cite" href="#sources">[13]</a> <a class="cite" href="#sources">[14]</a> <a class="cite" href="#sources">[16]</a>. Few tools help during the moment itself.</span></li>
       </ul>
       <div class="stack">
         <div class="callout">
@@ -333,7 +334,7 @@ footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;gap:12px 32px;justif
       <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-mic"/></svg></span><h3>Record and alert</h3><p>One button records audio. Another sends your location to an emergency contact if a situation feels unsafe.</p></div>
       <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-scale"/></svg></span><h3>One tap to free legal help</h3><p>Direct links to Legal Aid Ontario, Justice for Children and Youth and community legal clinics for follow-up.</p></div>
       <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-eye"/></svg></span><h3>Built for everyone</h3><p>Big-text mode, read-aloud and English and French versions, so Elders and newcomers can use it as easily as teens.</p></div>
-      <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-police"/></svg></span><h3>Works offline</h3><p>Every card is stored on the phone. No signal in a basement office or a parking lot doesn't stop it.</p></div>
+      <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-offline"/></svg></span><h3>Works offline</h3><p>Every card is stored on the phone. No signal in a basement office or a parking lot doesn't stop it.</p></div>
     </div>
 
     <div class="split" style="margin-top:64px">
@@ -420,10 +421,10 @@ footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;gap:12px 32px;justif
     </div>
     <div class="partners">
       <div class="partner"><div><span class="role">Referral · Free lawyer</span><h3>Legal Aid Ontario</h3></div><p>Free duty counsel for anyone arrested or detained, and legal aid for people with low income. The app's "Talk to a lawyer" button connects here.</p><a href="https://www.legalaid.on.ca" target="_blank" rel="noopener">legalaid.on.ca</a></div>
-      <div class="partner"><div><span class="role">Referral · Youth</span><h3>Justice for Children and Youth</h3></div><p>A legal clinic for people under 18 (and some up to 25) on school discipline, police and housing. Linked from every school and youth card.</p><a href="https://jfcy.org" target="_blank" rel="noopener">jfcy.org</a></div>
+      <div class="partner"><div><span class="role">Referral · Youth</span><h3>Justice for Children and Youth</h3></div><p>A legal clinic mainly for people under 18, helping with school discipline, police and housing. Linked from every school and youth card.</p><a href="https://jfcy.org" target="_blank" rel="noopener">jfcy.org</a></div>
       <div class="partner"><div><span class="role">Content review</span><h3>CLEO · Steps to Justice</h3></div><p>Community Legal Education Ontario writes plain-language legal guides. Our cards would link to their longer explanations for reading later.</p><a href="https://stepstojustice.ca" target="_blank" rel="noopener">stepstojustice.ca</a></div>
-      <div class="partner"><div><span class="role">Referral · Local</span><h3>Community legal clinics</h3></div><p>Over 70 Legal Aid Ontario-funded clinics across the province help with employment, housing and human rights problems.</p><a href="https://www.legalaid.on.ca" target="_blank" rel="noopener">Find a clinic</a></div>
-      <div class="partner"><div><span class="role">Workplace</span><h3>Ontario Ministry of Labour</h3></div><p>Workers can file employment standards claims and safety complaints. Work cards link straight to these forms.</p><a href="https://www.ontario.ca/document/your-guide-employment-standards-act-0" target="_blank" rel="noopener">ontario.ca/employment-standards</a></div>
+      <div class="partner"><div><span class="role">Referral · Local</span><h3>Community legal clinics</h3></div><p>A province-wide network of clinics funded by Legal Aid Ontario helps with employment, housing and human rights problems.</p><a href="https://www.legalaid.on.ca" target="_blank" rel="noopener">Find a clinic</a></div>
+      <div class="partner"><div><span class="role">Workplace</span><h3>Ontario Ministry of Labour, Immigration, Training and Skills Development</h3></div><p>Workers can file employment standards claims and safety complaints. Work cards link straight to these forms.</p><a href="https://www.ontario.ca/document/your-guide-employment-standards-act-0" target="_blank" rel="noopener">ontario.ca/employment-standards</a></div>
       <div class="partner"><div><span class="role">Outreach · Youth justice</span><h3>John Howard Society of Ontario</h3></div><p>Works with young people involved in the justice system and could share the app through its programs.</p><a href="https://johnhoward.on.ca" target="_blank" rel="noopener">johnhoward.on.ca</a></div>
       <div class="partner"><div><span class="role">Human rights</span><h3>Human Rights Legal Support Centre</h3></div><p>Free help when unfair treatment is based on race, disability, age or another protected ground.</p><a href="https://www.hrlsc.on.ca" target="_blank" rel="noopener">hrlsc.on.ca</a></div>
     </div>
@@ -485,7 +486,7 @@ footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;gap:12px 32px;justif
       {when:"Stopped on the street", say:"Am I being detained, or am I free to go?", why:"If you are not detained, you can calmly walk away. If you are detained, police must tell you why right away.", cite:"Charter s 9, 10(a); R v Grant", ref:4},
       {when:"They want to look in your bag or car", say:"I don't consent to a search.", why:"You have the right to be secure against unreasonable search. Say it clearly, but don't block or resist. If the search was illegal, a lawyer can challenge it later.", cite:"Charter s 8", ref:1},
       {when:"You are detained or arrested", say:"I want to speak to a lawyer.", why:"Police must tell you about your right to a lawyer immediately and let you call one. Free duty counsel from Legal Aid Ontario is available 24/7.", cite:"Charter s 10(b); R v Suberu", ref:5},
-      {when:"They keep asking questions", say:"I'm choosing to stay silent until I talk to a lawyer.", why:"You generally don't have to answer police questions. If you're driving, you must still show your licence, ownership and insurance.", cite:"Charter s 7; R v Hebert; HTA s 33", ref:6},
+      {when:"They keep asking questions", say:"I'm choosing to stay silent until I talk to a lawyer.", why:"You generally don't have to answer police questions. If you're driving, you must still show your driver's licence when an officer asks for it.", cite:"Charter s 7; R v Hebert; HTA s 33", ref:6},
       {when:"You are under 18", say:"I want my parent and a lawyer here before I say anything.", why:"Youth have extra protection. Before any statement, police must explain your right to have a lawyer and a parent or other adult present.", cite:"YCJA s 146", ref:2},
       {when:"You want a record of it", say:"Officer, I'm recording this for my own safety.", why:"It is legal to record a conversation you are part of. Keep a safe distance and don't interfere with what officers are doing.", cite:"Criminal Code s 184(2)(a)", ref:11}
     ],
@@ -527,10 +528,10 @@ footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;gap:12px 32px;justif
   function renderCards(sub){
     subBtns.forEach(function(b){ b.setAttribute("aria-selected", b.dataset.sub === sub ? "true" : "false"); });
     cardsEl.innerHTML = DATA[sub].map(function(c){
-      return '<button class="card" type="button" aria-pressed="false"><div class="inner">' +
-        '<div class="face front"><span class="when">' + esc(c.when) + '</span><span class="say">' + esc(c.say) + '</span><span class="hint">Tap for the law →</span></div>' +
-        '<div class="face back-face" aria-hidden="true"><span class="when">Why this works</span><p>' + esc(c.why) + '</p><span><span class="cite">' + esc(c.cite) + ' [' + c.ref + ']</span></span><span class="hint">Tap to flip back</span></div>' +
-        '</div></button>';
+      return '<button class="card" type="button" aria-pressed="false"><span class="inner">' +
+        '<span class="face front"><span class="when">' + esc(c.when) + '</span><span class="say">' + esc(c.say) + '</span><span class="hint">Tap for the law →</span></span>' +
+        '<span class="face back-face" aria-hidden="true"><span class="when">Why this works</span><span class="why">' + esc(c.why) + '</span><span><span class="cite">' + esc(c.cite) + ' [' + c.ref + ']</span></span><span class="hint">Tap to flip back</span></span>' +
+        '</span></button>';
     }).join("");
   }
   cardsEl.addEventListener("click", function(e){
