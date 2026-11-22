@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pocket Rights</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: sticky tab bar over one-view-at-a-time pages; hero pairs a headline with a working phone mockup; rights cards flip like laminated pocket cards. */
+:root{
+  --paper:#F2F4F7; --surface:#FFFFFF; --ink:#13203A; --ink-2:#4A566B; --line:#D8DEE7;
+  --pocket:#1B2C52; --on-pocket:#FFFFFF; --stitch:#F2B544;
+  --signal:#C8243A; --signal-soft:#FBE6E9;
+  --calm:#1D7468; --calm-soft:#DFF1EC;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0D1322; --surface:#151D31; --ink:#E7ECF4; --ink-2:#A2ADC1; --line:#29344E;
+  --pocket:#263E73; --on-pocket:#FFFFFF; --stitch:#F2B544;
+  --signal:#FF6476; --signal-soft:#3A1720; --calm:#52C7B3; --calm-soft:#0F2E2A; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --paper:#0D1322; --surface:#151D31; --ink:#E7ECF4; --ink-2:#A2ADC1; --line:#29344E;
+  --pocket:#263E73; --on-pocket:#FFFFFF; --stitch:#F2B544;
+  --signal:#FF6476; --signal-soft:#3A1720; --calm:#52C7B3; --calm-soft:#0F2E2A; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--f-display);line-height:1.08;text-wrap:balance;margin:0;letter-spacing:-.015em}
+h1{font-size:clamp(2.3rem,5.6vw,4rem);font-weight:800}
+h2{font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:700}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font:600 .74rem/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--signal)}
+.lede{font-size:1.12rem;color:var(--ink-2);max-width:60ch}
+.cite{font:500 .72rem/1 var(--f-mono);color:var(--calm);background:var(--calm-soft);padding:.28em .5em;border-radius:6px;white-space:nowrap;text-decoration:none}
+.cite:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--stitch);outline-offset:2px;border-radius:6px}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.brand b{font:800 1.18rem/1 var(--f-display);letter-spacing:-.02em}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1;justify-content:flex-end}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{white-space:nowrap;text-decoration:none;font-weight:600;font-size:.92rem;color:var(--ink-2);padding:.55em .8em;border-radius:999px}
+.tabs a:hover{color:var(--ink);background:var(--paper)}
+.tabs a[aria-current="page"]{color:var(--on-pocket);background:var(--pocket)}
+@media (max-width:760px){.bar{flex-wrap:wrap;gap:6px}.tabs{flex-basis:100%;justify-content:flex-start}}
+
+/* views */
+main section.view{padding-block:56px 72px}
+.view-head{display:grid;gap:14px;margin-bottom:40px}
+.stack{display:grid;gap:18px}
+
+/* buttons */
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 1rem/1 var(--f-body);padding:.95em 1.3em;border-radius:999px;text-decoration:none;border:2px solid var(--pocket);cursor:pointer}
+.btn.primary{background:var(--pocket);color:var(--on-pocket)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{transform:translateY(-1px)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero .copy{display:grid;gap:22px;min-width:0}
+.hero h1 em{font-style:normal;color:var(--signal)}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+
+/* phone */
+.phone-stage{display:flex;justify-content:center}
+.phone{width:300px;max-width:100%;aspect-ratio:9/18.5;background:#0B1020;border-radius:42px;padding:11px;box-shadow:0 30px 60px -20px rgba(19,32,58,.45)}
+.screen{height:100%;border-radius:32px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column;position:relative;font-size:13px;color:var(--ink)}
+.notch{width:90px;height:22px;background:#0B1020;border-radius:0 0 14px 14px;margin:0 auto}
+.app-top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 6px}
+.app-top .mini{display:flex;align-items:center;gap:6px;font:800 14px/1 var(--f-display)}
+.pill{font:600 10px/1 var(--f-body);border:1px solid var(--line);border-radius:999px;padding:5px 8px;background:var(--paper);color:var(--ink);cursor:pointer}
+.app-body{flex:1;padding:6px 16px 0;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.app-body h4{margin:4px 0 2px;font:800 19px/1.15 var(--f-display)}
+.app-body .muted{color:var(--ink-2);font-size:12px}
+.sit{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:11px 12px;font:700 14px/1.2 var(--f-body);color:var(--ink);cursor:pointer}
+.sit:hover{border-color:var(--pocket)}
+.sit .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--pocket);color:var(--on-pocket);flex-shrink:0}
+.sit small{display:block;font-weight:500;color:var(--ink-2);font-size:11px;margin-top:2px}
+.sos{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 16px}
+.sos button{border:0;border-radius:12px;padding:10px 6px;font:700 12px/1.1 var(--f-body);cursor:pointer}
+.sos .rec{background:var(--signal);color:#fff}
+.sos .alert{background:var(--signal-soft);color:var(--signal)}
+.lawyer{margin:0 16px 14px;border-radius:12px;padding:10px;text-align:center;background:var(--calm-soft);color:var(--calm);font:700 12px/1.2 var(--f-body)}
+.script-line{border-left:3px solid var(--signal);background:var(--paper);border-radius:0 10px 10px 0;padding:8px 10px;font:600 14px/1.35 var(--f-body)}
+.back{align-self:flex-start;border:0;background:none;color:var(--ink-2);font:600 12px var(--f-body);cursor:pointer;padding:0}
+.toast{position:absolute;left:14px;right:14px;bottom:70px;background:var(--ink);color:var(--paper);border-radius:12px;padding:9px 12px;font-size:12px;font-weight:600}
+.screen.big{font-size:15px}.screen.big .sit{font-size:16px}.screen.big .script-line{font-size:16px}.screen.big .app-body h4{font-size:22px}
+.phone-cap{margin-top:14px;text-align:center;color:var(--ink-2);font-size:.85rem}
+
+/* moments strip */
+.moments{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:64px}
+.moment{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:10px;text-decoration:none;align-content:start}
+.moment:hover{border-color:var(--pocket)}
+.moment .q{font:700 1.15rem/1.3 var(--f-display)}
+.moment .go{color:var(--signal);font-weight:700;font-size:.9rem}
+@media (max-width:760px){.moments{grid-template-columns:1fr}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;border-top:2px solid var(--ink)}
+.step{padding:22px 22px 0 0;display:grid;gap:8px;align-content:start}
+.step .n{font:800 2.6rem/1 var(--f-display);color:var(--signal)}
+@media (max-width:760px){.steps{grid-template-columns:1fr}.step{padding-right:0}}
+
+/* generic two-column text */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.split > *{min-width:0}
+@media (max-width:860px){.split{grid-template-columns:1fr;gap:32px}}
+.callout{background:var(--pocket);color:var(--on-pocket);border-radius:var(--r);padding:28px;display:grid;gap:12px}
+.callout .big{font:800 clamp(1.4rem,2.6vw,1.9rem)/1.2 var(--f-display)}
+.callout .cite{background:rgba(255,255,255,.14);color:#fff}
+.list{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.list li{padding:16px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}
+.list li:first-child{padding-top:0}
+.list li b{font-family:var(--f-display);font-size:1.08rem}
+
+/* features */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:10px;align-content:start}
+.feat .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--signal-soft);color:var(--signal)}
+.feat p{color:var(--ink-2)}
+.compare{width:100%;border-collapse:collapse;font-size:.95rem}
+.compare th,.compare td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.compare th{font:600 .74rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.compare td:first-child{font-weight:700}
+.yes{color:var(--calm);font-weight:700}.no{color:var(--ink-2)}
+.scroll-x{overflow-x:auto}
+
+/* rights */
+.subtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.subtabs button{font:700 .95rem/1 var(--f-body);padding:.8em 1.2em;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.subtabs button[aria-selected="true"]{border-color:var(--pocket);background:var(--pocket);color:var(--on-pocket)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:20px}
+.card{perspective:1200px;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.card .inner{display:grid;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.card.flipped .inner{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);padding:22px;display:grid;gap:12px;align-content:start;min-height:250px}
+.front{background:var(--surface);border:1px solid var(--line);position:relative}
+.front::after{content:"";position:absolute;inset:7px;border:1.5px dashed var(--line);border-radius:10px;pointer-events:none}
+.back-face{background:var(--pocket);color:var(--on-pocket);transform:rotateY(180deg)}
+.back-face .cite{background:rgba(255,255,255,.14);color:#fff}
+.face .when{font:600 .74rem/1.2 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.back-face .when{color:var(--stitch)}
+.face .say{font:700 1.35rem/1.25 var(--f-display)}
+.face .say::before{content:"Say: ";color:var(--signal)}
+.face .hint{margin-top:auto;font-size:.8rem;color:var(--ink-2)}
+.back-face .hint{color:rgba(255,255,255,.7)}
+.back-face p{font-size:.95rem}
+.note{margin-top:28px;padding:16px 18px;border-radius:12px;background:var(--signal-soft);color:var(--ink);font-size:.95rem}
+@media (prefers-reduced-motion:reduce){.card .inner{transition:none}.btn:hover{transform:none}}
+
+/* users */
+.users{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px}
+.user{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:10px;align-content:start}
+.user .tag{justify-self:start;font:600 .72rem/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;padding:.45em .7em;border-radius:999px;background:var(--calm-soft);color:var(--calm)}
+.user .ex{font-style:italic;color:var(--ink-2)}
+
+/* partners */
+.partners{display:grid;gap:0;border-top:2px solid var(--ink)}
+.partner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr) minmax(0,1fr);gap:24px;padding:22px 0;border-bottom:1px solid var(--line)}
+.partner .role{font:600 .74rem/1.4 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--signal)}
+.partner a{font-weight:600;color:var(--calm);word-break:break-word}
+@media (max-width:760px){.partner{grid-template-columns:1fr;gap:6px}}
+
+/* sources */
+.sources{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.sources li{counter-increment:s;display:grid;grid-template-columns:2.6rem 1fr;gap:8px;font-size:.96rem}
+.sources li::before{content:"[" counter(s) "]";font:500 .85rem/1.7 var(--f-mono);color:var(--calm)}
+.sources li > div{min-width:0;overflow-wrap:anywhere}
+.src-group{font:600 .74rem/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin:36px 0 14px}
+
+footer{border-top:1px solid var(--line);background:var(--surface)}
+footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;font-size:.88rem;color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 64 64">
+      <path d="M8 6h48v34L32 60 8 40z" fill="var(--pocket)"/>
+      <path d="M13.5 11.5h37v26.3L32 53 13.5 37.8z" fill="none" stroke="var(--stitch)" stroke-width="2" stroke-dasharray="3.2 2.6" stroke-linejoin="round"/>
+      <rect x="19" y="17" width="26" height="17" rx="5" fill="var(--signal)"/>
+      <path d="M25 34l-2 6 7-6z" fill="var(--signal)"/>
+      <path d="M25 25.5l4 3.8 8-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-police" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 8l1.2 2.5 2.8.3-2 1.9.5 2.8L12 14.2l-2.5 1.3.5-2.8-2-1.9 2.8-.3z" fill="currentColor"/></symbol>
+    <symbol id="i-school" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-work" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 7V5h6v2M3 12h18" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="5" width="14" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 3h12a2 2 0 012 2v14" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 10h6M7 14h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 10h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0014 0M12 18v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 21h14M4 7h16M7 7l-3 7a3 3 0 006 0zM17 7l-3 7a3 3 0 006 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#home" aria-label="Pocket Rights home">
+      <svg width="34" height="34" aria-hidden="true"><use href="#logo"/></svg>
+      <b>Pocket Rights</b>
+    </a>
+    <nav class="tabs" aria-label="Site sections">
+      <a href="#home">Home</a>
+      <a href="#problem">The Problem</a>
+      <a href="#app">The App</a>
+      <a href="#rights">Know Your Rights</a>
+      <a href="#users">Who It's For</a>
+      <a href="#partners">Justice Partners</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<section class="view" id="v-home" data-view="home">
+  <div class="wrap">
+    <div class="hero">
+      <div class="copy">
+        <span class="eyebrow">Apps for Justice · Ontario</span>
+        <h1>Know what to say <em>when it counts.</em></h1>
+        <p class="lede">Pocket Rights turns the Charter and Ontario law into short, calm scripts you can read in five seconds, for the moments when a police officer, a principal or a boss puts you on the spot.</p>
+        <div class="btns">
+          <a class="btn primary" href="#rights">Read the rights cards</a>
+          <a class="btn ghost" href="#app">How the app works</a>
+        </div>
+      </div>
+      <div>
+        <div class="phone-stage">
+          <div class="phone" aria-label="Interactive mockup of the Pocket Rights home screen">
+            <div class="screen" id="screen">
+              <div class="notch"></div>
+              <div class="app-top">
+                <span class="mini"><svg width="20" height="20" aria-hidden="true"><use href="#logo"/></svg>Pocket Rights</span>
+                <button class="pill" id="bigtext" type="button" aria-pressed="false">Aa Big text</button>
+              </div>
+              <div class="app-body" id="appbody"></div>
+              <div class="sos">
+                <button class="rec" type="button" data-toast="Recording audio. Saved privately to your phone.">● Record</button>
+                <button class="alert" type="button" data-toast="Your location was sent to Mom (emergency contact).">Alert contact</button>
+              </div>
+              <div class="lawyer">Talk to a free lawyer · Legal Aid Ontario</div>
+              <div class="toast" id="toast" hidden></div>
+            </div>
+          </div>
+        </div>
+        <p class="phone-cap">Home screen mockup. Tap a situation to try it.</p>
+      </div>
+    </div>
+
+    <div class="moments">
+      <a class="moment" href="#rights" data-sub="police">
+        <span class="eyebrow">Police</span>
+        <span class="q">"Do I have to answer that? Can they search my bag?"</span>
+        <span class="go">See the police cards →</span>
+      </a>
+      <a class="moment" href="#rights" data-sub="school">
+        <span class="eyebrow">School</span>
+        <span class="q">"I'm in the office and they're talking about suspending me."</span>
+        <span class="go">See the school cards →</span>
+      </a>
+      <a class="moment" href="#rights" data-sub="work">
+        <span class="eyebrow">Work</span>
+        <span class="q">"My boss says I don't get a break, and there's no pay stub."</span>
+        <span class="go">See the work cards →</span>
+      </a>
+    </div>
+
+    <div class="steps" aria-label="Using the app in three taps">
+      <div class="step"><span class="n">1</span><h3>Pick what's happening</h3><p>Police stop, school office or workplace. One tap, no searching.</p></div>
+      <div class="step"><span class="n">2</span><h3>Read the script</h3><p>Short, polite lines to say out loud, plus what the law actually means.</p></div>
+      <div class="step"><span class="n">3</span><h3>Get real help</h3><p>Record, alert a contact, or connect to free legal aid for follow-up.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="view" id="v-problem" data-view="problem" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <span class="eyebrow">The access to justice problem</span>
+      <h2>People freeze, and give up rights they never knew they had.</h2>
+      <p class="lede">When an authority figure confronts you, stress takes over. The rules that protect you are written in legal language, and most people can't afford to call a lawyer in the moment. So they say too much, agree to things they don't have to, or stay quiet when they should speak up.</p>
+    </div>
+    <div class="split">
+      <ul class="list">
+        <li><b>The law is written for lawyers</b><span>The Charter promises protection from unreasonable search and a right to a lawyer, but it never tells you the words to use <a class="cite" href="#sources">[1]</a>.</span></li>
+        <li><b>Encounters are sudden</b><span>You can't research your rights during a traffic stop or a meeting with the vice-principal. Information has to arrive in seconds.</span></li>
+        <li><b>Young people feel the pressure most</b><span>The Supreme Court of Canada has recognized that young and racialized people may not feel free to walk away from police, even when they legally can <a class="cite" href="#sources">[3]</a>.</span></li>
+        <li><b>Help exists, but it comes later</b><span>Organizations like Legal Aid Ontario, Justice for Children and Youth and the John Howard Society of Ontario support people after a problem starts <a class="cite" href="#sources">[13]</a><a class="cite" href="#sources">[14]</a><a class="cite" href="#sources">[16]</a>. Few tools help during the moment itself.</span></li>
+      </ul>
+      <div class="stack">
+        <div class="callout">
+          <span class="eyebrow" style="color:var(--stitch)">Everyday legal problems</span>
+          <p class="big">Nearly half of adult Canadians face at least one everyday legal problem over a three-year period.</p>
+          <p>Canadian Forum on Civil Justice national survey <a class="cite" href="#sources">[17]</a></p>
+        </div>
+        <div class="feat">
+          <h3>The gap Pocket Rights fills</h3>
+          <p>Legal information websites are detailed and accurate, but they are built for reading at home. Pocket Rights is built for the five seconds when you need the right sentence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section class="view" id="v-app" data-view="app" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <span class="eyebrow">How Pocket Rights solves it</span>
+      <h2>A calm guide in your pocket.</h2>
+      <p class="lede">The name says it: legal help that lives on the phone in your pocket, dedicated to explaining and protecting your rights.</p>
+    </div>
+    <div class="features">
+      <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-chat"/></svg></span><h3>Situation scripts</h3><p>Exact, polite lines that protect your rights and lower the temperature. Written in plain English and checked against the law.</p></div>
+      <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-cards"/></svg></span><h3>Plain-language flashcards</h3><p>The Charter, the Youth Criminal Justice Act, the Education Act and Ontario employment law, turned into short cards with the section cited.</p></div>
+      <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-mic"/></svg></span><h3>Record and alert</h3><p>One button records audio. Another sends your location to an emergency contact if a situation feels unsafe.</p></div>
+      <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-scale"/></svg></span><h3>One tap to free legal help</h3><p>Direct links to Legal Aid Ontario, Justice for Children and Youth and community legal clinics for follow-up.</p></div>
+      <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-eye"/></svg></span><h3>Built for everyone</h3><p>Big-text mode, read-aloud and English and French versions, so Elders and newcomers can use it as easily as teens.</p></div>
+      <div class="feat"><span class="ic"><svg width="22" height="22"><use href="#i-police"/></svg></span><h3>Works offline</h3><p>Every card is stored on the phone. No signal in a basement office or a parking lot doesn't stop it.</p></div>
+    </div>
+
+    <div class="split" style="margin-top:64px">
+      <div class="stack">
+        <span class="eyebrow">Outcomes</span>
+        <h2>What changes</h2>
+        <ul class="list">
+          <li><b>Short term</b><span>Users stay calm under pressure, avoid saying the wrong thing, and get answers without digging through long websites.</span></li>
+          <li><b>Long term</b><span>People who understand their legal boundaries, fewer unlawful searches and workplace violations, and earlier connections between vulnerable people and the justice system.</span></li>
+        </ul>
+      </div>
+      <div class="stack">
+        <span class="eyebrow">Getting the word out</span>
+        <h2>Reaching our users</h2>
+        <ul class="list">
+          <li><b>Schools</b><span>Teachers and guidance counsellors share the app in civics, law and careers classes.</span></li>
+          <li><b>QR posters</b><span>In community centres, libraries, parks, schools and plazas across the GTA.</span></li>
+          <li><b>Short videos</b><span>Social media clips acting out everyday situations and showing how the app helps.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:64px" class="stack">
+      <span class="eyebrow">What makes it different</span>
+      <h2>Made for the moment, not the research.</h2>
+      <div class="scroll-x">
+        <table class="compare">
+          <thead><tr><th>Feature</th><th>Legal info websites</th><th>Pocket Rights</th></tr></thead>
+          <tbody>
+            <tr><td>Exact words to say</td><td class="no">Rarely</td><td class="yes">Every card</td></tr>
+            <tr><td>Answer in under 5 seconds</td><td class="no">Search and read</td><td class="yes">One tap</td></tr>
+            <tr><td>Record or alert a contact</td><td class="no">No</td><td class="yes">Built in</td></tr>
+            <tr><td>Works with no signal</td><td class="no">No</td><td class="yes">Yes</td></tr>
+            <tr><td>Links to free legal aid</td><td class="yes">Yes</td><td class="yes">Yes, one tap</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RIGHTS -->
+<section class="view" id="v-rights" data-view="rights" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <span class="eyebrow">Know your rights · Ontario</span>
+      <h2>Tap a card to see the law behind the script.</h2>
+      <p class="lede">These are the same cards that appear in the app. The front tells you what to say. The back explains why, and cites the law.</p>
+    </div>
+    <div class="subtabs" role="tablist" aria-label="Situations">
+      <button role="tab" type="button" data-sub="police" aria-selected="true"><svg width="16" height="16" style="vertical-align:-3px"><use href="#i-police"/></svg> Police</button>
+      <button role="tab" type="button" data-sub="school" aria-selected="false"><svg width="16" height="16" style="vertical-align:-3px"><use href="#i-school"/></svg> School</button>
+      <button role="tab" type="button" data-sub="work" aria-selected="false"><svg width="16" height="16" style="vertical-align:-3px"><use href="#i-work"/></svg> Work</button>
+    </div>
+    <div class="cards" id="cards"></div>
+    <p class="note"><b>Stay safe:</b> never physically resist police or staff, even if you believe something is unfair. Say your script calmly, remember the details, and challenge it later with a lawyer. This site and app give legal information, not legal advice.</p>
+  </div>
+</section>
+
+<!-- USERS -->
+<section class="view" id="v-users" data-view="users" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <span class="eyebrow">Target users</span>
+      <h2>Anyone who can't call a lawyer in the moment.</h2>
+      <p class="lede">Most people run into police, school rules or a bad boss at some point. Pocket Rights focuses on the groups who meet them most often and have the fewest resources.</p>
+    </div>
+    <div class="users">
+      <div class="user"><span class="tag">Students</span><h3>High school students</h3><p>Searches, suspensions and police in schools.</p><p class="ex">"The VP wants to search my locker."</p></div>
+      <div class="user"><span class="tag">Teens</span><h3>Young people in public</h3><p>Stops on the street, in parks and in cars, where youth have extra protections.</p><p class="ex">"Officers stopped us outside the plaza."</p></div>
+      <div class="user"><span class="tag">Young workers</span><h3>First and part-time jobs</h3><p>Breaks, pay stubs and unsafe tasks, where new workers often don't know the rules.</p><p class="ex">"No break on an eight-hour shift."</p></div>
+      <div class="user"><span class="tag">Elders</span><h3>Seniors and newcomers</h3><p>Big text, read-aloud and French support make the same cards usable for everyone.</p><p class="ex">"I can't read the small print."</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="view" id="v-partners" data-view="partners" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <span class="eyebrow">Integration with the justice sector</span>
+      <h2>We point people to the help that already exists.</h2>
+      <p class="lede">Pocket Rights doesn't replace lawyers or clinics. It gets people through the first few minutes, then hands them to the organizations built to help. Partners would review our scripts for accuracy and receive referrals from the app.</p>
+    </div>
+    <div class="partners">
+      <div class="partner"><div><span class="role">Referral · Free lawyer</span><h3>Legal Aid Ontario</h3></div><p>Free duty counsel for anyone arrested or detained, and legal aid for people with low income. The app's "Talk to a lawyer" button connects here.</p><a href="https://www.legalaid.on.ca" target="_blank" rel="noopener">legalaid.on.ca</a></div>
+      <div class="partner"><div><span class="role">Referral · Youth</span><h3>Justice for Children and Youth</h3></div><p>A legal clinic for people under 18 (and some up to 25) on school discipline, police and housing. Linked from every school and youth card.</p><a href="https://jfcy.org" target="_blank" rel="noopener">jfcy.org</a></div>
+      <div class="partner"><div><span class="role">Content review</span><h3>CLEO · Steps to Justice</h3></div><p>Community Legal Education Ontario writes plain-language legal guides. Our cards would link to their longer explanations for reading later.</p><a href="https://stepstojustice.ca" target="_blank" rel="noopener">stepstojustice.ca</a></div>
+      <div class="partner"><div><span class="role">Referral · Local</span><h3>Community legal clinics</h3></div><p>Over 70 Legal Aid Ontario-funded clinics across the province help with employment, housing and human rights problems.</p><a href="https://www.legalaid.on.ca" target="_blank" rel="noopener">Find a clinic</a></div>
+      <div class="partner"><div><span class="role">Workplace</span><h3>Ontario Ministry of Labour</h3></div><p>Workers can file employment standards claims and safety complaints. Work cards link straight to these forms.</p><a href="https://www.ontario.ca/document/your-guide-employment-standards-act-0" target="_blank" rel="noopener">ontario.ca/employment-standards</a></div>
+      <div class="partner"><div><span class="role">Outreach · Youth justice</span><h3>John Howard Society of Ontario</h3></div><p>Works with young people involved in the justice system and could share the app through its programs.</p><a href="https://johnhoward.on.ca" target="_blank" rel="noopener">johnhoward.on.ca</a></div>
+      <div class="partner"><div><span class="role">Human rights</span><h3>Human Rights Legal Support Centre</h3></div><p>Free help when unfair treatment is based on race, disability, age or another protected ground.</p><a href="https://www.hrlsc.on.ca" target="_blank" rel="noopener">hrlsc.on.ca</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="view" id="v-sources" data-view="sources" hidden>
+  <div class="wrap">
+    <div class="view-head">
+      <span class="eyebrow">Citations</span>
+      <h2>Sources</h2>
+      <p class="lede">Legal citations follow the McGill Guide (Canadian Guide to Uniform Legal Citation).</p>
+    </div>
+    <p class="src-group">Legislation</p>
+    <ol class="sources">
+      <li><div><i>Canadian Charter of Rights and Freedoms</i>, ss 7–10, Part I of the <i>Constitution Act, 1982</i>, being Schedule B to the <i>Canada Act 1982</i> (UK), 1982, c 11.</div></li>
+      <li><div><i>Youth Criminal Justice Act</i>, SC 2002, c 1, s 146.</div></li>
+    </ol>
+    <p class="src-group">Case law</p>
+    <ol class="sources" start="3" style="counter-reset:s 2">
+      <li><div><i>R v Le</i>, 2019 SCC 34.</div></li>
+      <li><div><i>R v Grant</i>, 2009 SCC 32.</div></li>
+      <li><div><i>R v Suberu</i>, 2009 SCC 33.</div></li>
+      <li><div><i>R v Hebert</i>, [1990] 2 SCR 151.</div></li>
+      <li><div><i>R v M (MR)</i>, [1998] 3 SCR 393.</div></li>
+    </ol>
+    <p class="src-group">Ontario and federal statutes</p>
+    <ol class="sources" style="counter-reset:s 7">
+      <li><div><i>Education Act</i>, RSO 1990, c E.2, Part XIII.</div></li>
+      <li><div><i>Employment Standards Act, 2000</i>, SO 2000, c 41, ss 12, 20, 74.</div></li>
+      <li><div><i>Occupational Health and Safety Act</i>, RSO 1990, c O.1, s 43.</div></li>
+      <li><div><i>Criminal Code</i>, RSC 1985, c C-46, s 184(2)(a).</div></li>
+      <li><div><i>Highway Traffic Act</i>, RSO 1990, c H.8, s 33.</div></li>
+    </ol>
+    <p class="src-group">Organizations and research</p>
+    <ol class="sources" style="counter-reset:s 12">
+      <li><div>Legal Aid Ontario, online: <a href="https://www.legalaid.on.ca" target="_blank" rel="noopener">legalaid.on.ca</a>.</div></li>
+      <li><div>Justice for Children and Youth, online: <a href="https://jfcy.org" target="_blank" rel="noopener">jfcy.org</a>.</div></li>
+      <li><div>Community Legal Education Ontario, <i>Steps to Justice</i>, online: <a href="https://stepstojustice.ca" target="_blank" rel="noopener">stepstojustice.ca</a>.</div></li>
+      <li><div>John Howard Society of Ontario, online: <a href="https://johnhoward.on.ca" target="_blank" rel="noopener">johnhoward.on.ca</a>.</div></li>
+      <li><div>Trevor CW Farrow et al, <i>Everyday Legal Problems and the Cost of Justice in Canada: Overview Report</i> (Toronto: Canadian Forum on Civil Justice, 2016).</div></li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b style="color:var(--ink)">Pocket Rights</b> · Team prrgow (Fateh &amp; Adyan) · Apps for Justice Challenge 2026</span>
+    <span>Legal information, not legal advice. In an emergency, call 911.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var DATA = {
+    police: [
+      {when:"Stopped on the street", say:"Am I being detained, or am I free to go?", why:"If you are not detained, you can calmly walk away. If you are detained, police must tell you why right away.", cite:"Charter s 9, 10(a); R v Grant", ref:4},
+      {when:"They want to look in your bag or car", say:"I don't consent to a search.", why:"You have the right to be secure against unreasonable search. Say it clearly, but don't block or resist. If the search was illegal, a lawyer can challenge it later.", cite:"Charter s 8", ref:1},
+      {when:"You are detained or arrested", say:"I want to speak to a lawyer.", why:"Police must tell you about your right to a lawyer immediately and let you call one. Free duty counsel from Legal Aid Ontario is available 24/7.", cite:"Charter s 10(b); R v Suberu", ref:5},
+      {when:"They keep asking questions", say:"I'm choosing to stay silent until I talk to a lawyer.", why:"You generally don't have to answer police questions. If you're driving, you must still show your licence, ownership and insurance.", cite:"Charter s 7; R v Hebert; HTA s 33", ref:6},
+      {when:"You are under 18", say:"I want my parent and a lawyer here before I say anything.", why:"Youth have extra protection. Before any statement, police must explain your right to have a lawyer and a parent or other adult present.", cite:"YCJA s 146", ref:2},
+      {when:"You want a record of it", say:"Officer, I'm recording this for my own safety.", why:"It is legal to record a conversation you are part of. Keep a safe distance and don't interfere with what officers are doing.", cite:"Criminal Code s 184(2)(a)", ref:11}
+    ],
+    school: [
+      {when:"Staff want to search your locker or bag", say:"Can you tell me the reason for the search? I'd like my parent to know.", why:"School staff can search with reasonable grounds, a lower bar than police need. Asking for the reason calmly creates a record of it.", cite:"R v M (MR)", ref:7},
+      {when:"Police are questioning you at school", say:"I want to speak to a lawyer and have my parent here.", why:"When police are involved, your full Charter rights apply, even on school property. The school office isn't a place where those rights disappear.", cite:"Charter s 10(b); YCJA s 146", ref:2},
+      {when:"You're told you're suspended", say:"Can I have the reason in writing, and how do I appeal?", why:"The principal must give written notice of a suspension. Your parent, or you if you're 18 or older, can appeal it to the school board.", cite:"Education Act, Part XIII", ref:8},
+      {when:"Someone wants a written statement", say:"I'd like to talk to my parent before I write anything.", why:"What you write can be used in discipline and could be passed to police. You can ask for time and support first.", cite:"JFCY guidance", ref:14}
+    ],
+    work: [
+      {when:"No break on a long shift", say:"I'm entitled to a 30-minute eating break after five hours.", why:"Ontario law says you can't work more than five hours in a row without a 30-minute unpaid eating period.", cite:"ESA 2000, s 20", ref:9},
+      {when:"No pay stub", say:"Can I get a wage statement for this pay?", why:"Your employer must give you a written wage statement every payday showing hours, pay rate and deductions.", cite:"ESA 2000, s 12", ref:9},
+      {when:"You're asked to do something unsafe", say:"I'm refusing this task because I believe it's unsafe. Can we call the supervisor?", why:"Workers have the right to refuse work they believe is dangerous. The employer must investigate.", cite:"OHSA s 43", ref:10},
+      {when:"You're threatened for asking", say:"I'm only asking about my rights under the Employment Standards Act.", why:"Your employer can't fire, punish or threaten you for asking about or using your employment rights.", cite:"ESA 2000, s 74", ref:9}
+    ]
+  };
+
+  /* ---------- router ---------- */
+  var views = Array.prototype.slice.call(document.querySelectorAll("[data-view]"));
+  var names = views.map(function(v){return v.dataset.view});
+  var navLinks = document.querySelectorAll(".tabs a");
+  function show(){
+    var name = (location.hash || "#home").slice(1);
+    if (names.indexOf(name) === -1) name = "home";
+    views.forEach(function(v){ v.hidden = v.dataset.view !== name; });
+    navLinks.forEach(function(a){
+      if (a.getAttribute("href") === "#" + name) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    });
+    var cur = document.querySelector('.tabs a[aria-current="page"]');
+    if (cur && cur.scrollIntoView) { try { cur.scrollIntoView({block:"nearest",inline:"nearest"}); } catch(e){} }
+  }
+  window.addEventListener("hashchange", function(){ show(); window.scrollTo(0,0); });
+  show();
+
+  /* ---------- rights cards ---------- */
+  var cardsEl = document.getElementById("cards");
+  var subBtns = document.querySelectorAll(".subtabs button");
+  function esc(s){ return s.replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]}); }
+  function renderCards(sub){
+    subBtns.forEach(function(b){ b.setAttribute("aria-selected", b.dataset.sub === sub ? "true" : "false"); });
+    cardsEl.innerHTML = DATA[sub].map(function(c){
+      return '<button class="card" type="button" aria-pressed="false"><div class="inner">' +
+        '<div class="face front"><span class="when">' + esc(c.when) + '</span><span class="say">' + esc(c.say) + '</span><span class="hint">Tap for the law →</span></div>' +
+        '<div class="face back-face" aria-hidden="true"><span class="when">Why this works</span><p>' + esc(c.why) + '</p><span><span class="cite">' + esc(c.cite) + ' [' + c.ref + ']</span></span><span class="hint">Tap to flip back</span></div>' +
+        '</div></button>';
+    }).join("");
+  }
+  cardsEl.addEventListener("click", function(e){
+    var card = e.target.closest(".card"); if (!card) return;
+    var on = card.classList.toggle("flipped");
+    card.setAttribute("aria-pressed", on ? "true" : "false");
+    card.querySelector(".front").setAttribute("aria-hidden", on ? "true" : "false");
+    card.querySelector(".back-face").setAttribute("aria-hidden", on ? "false" : "true");
+  });
+  subBtns.forEach(function(b){ b.addEventListener("click", function(){ renderCards(b.dataset.sub); }); });
+  document.querySelectorAll(".moment[data-sub]").forEach(function(a){
+    a.addEventListener("click", function(){ renderCards(a.dataset.sub); });
+  });
+  renderCards("police");
+
+  /* ---------- phone demo ---------- */
+  var body = document.getElementById("appbody");
+  var screen = document.getElementById("screen");
+  var SIT = [
+    {k:"police", icon:"i-police", t:"Police stopped me", s:"Street, car or transit"},
+    {k:"school", icon:"i-school", t:"I'm at school", s:"Search, office, suspension"},
+    {k:"work",   icon:"i-work",   t:"Problem at work", s:"Breaks, pay, safety"}
+  ];
+  function home(){
+    body.innerHTML = '<div><h4>What\'s happening right now?</h4><p class="muted">Take a breath. Pick one.</p></div>' +
+      SIT.map(function(s){ return '<button class="sit" type="button" data-k="'+s.k+'"><span class="ic"><svg width="18" height="18"><use href="#'+s.icon+'"/></svg></span><span>'+s.t+'<small>'+s.s+'</small></span></button>'; }).join("");
+  }
+  function scripts(k){
+    var title = SIT.filter(function(s){return s.k===k})[0].t;
+    body.innerHTML = '<button class="back" type="button" data-back="1">← Back</button><h4>'+esc(title)+'</h4><p class="muted">Say these calmly:</p>' +
+      DATA[k].slice(0,3).map(function(c){ return '<div class="script-line">"'+esc(c.say)+'"</div>'; }).join("") +
+      '<p class="muted">Stay calm. Don\'t resist. You can challenge it later.</p>';
+  }
+  body.addEventListener("click", function(e){
+    var s = e.target.closest("[data-k]"); if (s) return scripts(s.dataset.k);
+    if (e.target.closest("[data-back]")) home();
+  });
+  var toast = document.getElementById("toast"), tt;
+  document.querySelectorAll("[data-toast]").forEach(function(b){
+    b.addEventListener("click", function(){
+      toast.textContent = b.dataset.toast + " (demo)"; toast.hidden = false;
+      clearTimeout(tt); tt = setTimeout(function(){ toast.hidden = true; }, 2600);
+    });
+  });
+  var big = document.getElementById("bigtext");
+  big.addEventListener("click", function(){
+    var on = screen.classList.toggle("big"); big.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  home();
+})();
+</script>
+</body>
+</html>
